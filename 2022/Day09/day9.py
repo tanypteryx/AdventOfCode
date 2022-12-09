@@ -45,16 +45,12 @@ for _ in range(9):
 print(len(set(new_path)))
 
 import sys
+sys.exit()
 
 # visualization
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-
-for path in paths:
-    reals = [x.real for x in path]
-    imags = [x.imag for x in path]
-#sys.exit()
 
 xx = []
 yy = []
@@ -82,7 +78,6 @@ def animate(i):
     global xx, yy
     dots.set_xdata(xx[i])
     dots.set_ydata(yy[i])
-    #dots.set_offsets(xx[i],yy[i])
     return dots
 
 ani = animation.FuncAnimation(fig, animate, frames=range(0000,11452), interval=33)
