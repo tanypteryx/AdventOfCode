@@ -14,12 +14,7 @@ def follower(headpath):
     for hp in headpath:
         distvec = hp-tail_pos[-1]
         if abs(distvec.real) > 1 or abs(distvec.imag) > 1:
-            if int(distvec.real) == distvec:
-                tail_pos.append(tail_pos[-1]+1*sign(distvec.real))
-            elif int(distvec.imag)*1j == distvec:
-                tail_pos.append(tail_pos[-1]+1j*sign(distvec.imag))
-            else:
-                tail_pos.append(tail_pos[-1]+sign(distvec.real)+1j*sign(distvec.imag))
+            tail_pos.append(tail_pos[-1]+sign(distvec.real)+1j*sign(distvec.imag))
         else:
             tail_pos.append(tail_pos[-1])
     return tail_pos[1:]
