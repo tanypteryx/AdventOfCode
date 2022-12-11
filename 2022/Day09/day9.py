@@ -1,16 +1,9 @@
 from itertools import accumulate
 
-def sign(x):
-    if x > 0:
-        return 1
-    elif x < 0:
-        return -1
-    else:
-        return 0
+sign = lambda x: 1 if x > 0 else (-1 if x < 0 else 0)
 
 def follower(headpath):
     tail_pos = [0]
-    #print(head_pos)
     for hp in headpath:
         distvec = hp-tail_pos[-1]
         if abs(distvec.real) > 1 or abs(distvec.imag) > 1:
