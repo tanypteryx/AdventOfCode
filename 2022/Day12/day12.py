@@ -9,10 +9,12 @@ def bfs(start, end, nodes):
         if v == end:
             count = 0
             current = end
+            path = [end,]
             while current != start:
                 current = parents[current]
+                path.append(current)
                 count += 1
-            return v, count
+            return path, count
         for edge in nodes[v]:
             if not explored[edge]:
                 explored[edge] = True
@@ -54,16 +56,28 @@ for ii in range(rdim):
         if data[ii][jj] == 'E':
             end = (ii,jj)
 
+# save for visualization
+import numpy as np
+np.savetxt('landscape.txt', np.asarray(heights, dtype=np.int8))
 
 # Part 1
-print(bfs(start, end ,nodes))
-
+path, length = bfs(start, end ,nodes)
+print(length)
+np.savetxt('path1.txt', np.asarray(path, dtype=np.int8))
 # Part 2
-pls = []
+lengths = []
+paths = []
 for ii in range(rdim):
     for jj in range(cdim):
         if data[ii][jj] =='a' or data[ii][jj] == 'S':
-            tmp = bfs((ii,jj),end,nodes)
-            if tmp[0] is not None: pls.append(tmp[1])
-print(min(pls))
-            
+            path, length = bfs((ii,jj),end,nodes)
+            if path is not None: 
+                lengths.append(length)
+                paths.append(path)
+print(min(lengths))
+argmin = min(enumerate(lengths), key=lambda x: x[1])[0]
+np.savetxt('path2.txt', np.asarray(paths[argmin], dtype=np.int8))
+
+
+
+ 
