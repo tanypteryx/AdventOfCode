@@ -1,25 +1,25 @@
-def dijkstra(start, end, nodes):
-    unvisited = list(nodes.keys())
-    prev = dict([(key,[]) for key in nodes.keys()])
-    distances = {x: 1e20 for x in nodes.keys()}
-    distances[start] = 0
-    while len(unvisited) > 0:
-        print(len(unvisited))
-        dist_candidates = dict([(key,value) for key, value in distances.items() if key in unvisited])
-        u = sorted(dist_candidates.items(), key=lambda item: item[1])[0][0]
-        if u == end:
-            break
-        unvisited.remove(u)
-        #print(u, sorted(dist_candidates.items(), key=lambda item: item[1])[0][0])
-        for v in nodes[u]:
-            if v in unvisited:
-                alt = distances[u] + 1
-                #print(distances[u],alt)
-                if alt < distances[v]:
-                    distances[v] = alt
-                    prev[v].append(u)
+def bfs(start, end, nodes):
+    queue = []
+    explored = dict([(key, False) for key in nodes.keys()])
+    explored[start] = True
+    queue.append(start)
+    parents = dict([(key, None) for key in nodes.keys()])
+    while len(queue) > 0:
+        v = queue.pop(0)
+        if v == end:
+            count = 0
+            current = end
+            while current != start:
+                current = parents[current]
+                count += 1
+            return v, count
+        for edge in nodes[v]:
+            if not explored[edge]:
+                explored[edge] = True
+                parents[edge] = v
+                queue.append(edge)
+    return None, None
 
-    return distances, prev
 
 
 with open('input.txt') as fid:
@@ -51,17 +51,19 @@ for ii in range(rdim):
         nodes[(ii,jj)] = tmp
         if data[ii][jj] == 'S':
             start = (ii,jj)
-        if data[ii][jj] == "E":
+        if data[ii][jj] == 'E':
             end = (ii,jj)
 
 
 # Part 1
-dists, prevs = dijkstra(start, end ,nodes)
-print(dists[end])
-
+print(bfs(start, end ,nodes))
 
 # Part 2
-#for ii in range(rdim):
-#    for jj in range(cdim):
-#        if data[ii][jj] =='a':
-#            print((ii,jj),dists[(ii,jj)])
+pls = []
+for ii in range(rdim):
+    for jj in range(cdim):
+        if data[ii][jj] =='a' or data[ii][jj] == 'S':
+            tmp = bfs((ii,jj),end,nodes)
+            if tmp[0] is not None: pls.append(tmp[1])
+print(min(pls))
+            
