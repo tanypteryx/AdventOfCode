@@ -8,16 +8,16 @@ def compare_lists(left, right):
         if left > right:
             return False
         else:
-            return "U"
+            return None 
     if isinstance(left, list) and isinstance(right, list):
         if left == [] and right == []:
-            return "U"
+            return None 
         if left != [] and right == []:
             return False
         if left == [] and right != []:
             return True
         tval = compare_lists(left[0],right[0])
-        if tval != 'U':
+        if tval != None:
             return tval
         else:
             return compare_lists(left[1:],right[1:])
