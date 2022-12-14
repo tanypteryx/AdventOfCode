@@ -6,28 +6,25 @@ def flow_sand(blocked, bottom, infinite = False):
     count = 0
     overflow = False
     while not(overflow):
-        if infinite and 500 in rocks:
-            return count
         settled = False
         start = 500
-        while not settled:
-            if start + 1j not in rocks:
-                start += 1j
-            elif start + (-1 + 1j) not in rocks:
-                start += -1 + 1j
-            elif start + (1 + 1j) not in rocks:
-                start += 1 + 1j
+        while not settled and start.imag < bottom + 1:
+            settled = True
+            for flow in 1j, -1+1j, 1+1j:
+                if start + flow not in rocks:
+                    start += flow
+                    settled = False
+                    break
+        count += 1
+        rocks.add(start)
+        if start.imag == bottom + 1:
+            if infinite:
+                rocks.add(start) 
             else:
-                settled = True
-                rocks.add(start)
-                count += 1
-            if start.imag == bottom + 2:
-                if not infinite: 
-                    overflow = True 
-                else: 
-                    settled = True
-                    rocks.add(start)
-                break
+                 overflow = True
+                 count -= 1 # Overcount on last sand (slips away)
+        if 500 in rocks:
+            return count
     return count
 
 with open('input.txt') as fid:
