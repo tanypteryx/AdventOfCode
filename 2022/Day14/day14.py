@@ -1,7 +1,3 @@
-
-import numpy as np
-import matplotlib.pyplot as plt
-
 mkcomplex = lambda x: x[0] + x[1]*1j
 indexer = lambda x: range(int(x)+1) if x > 0 else range(int(x),1)
 
