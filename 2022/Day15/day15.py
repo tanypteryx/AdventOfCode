@@ -44,7 +44,7 @@ print(part1 - corrector)
 lines = 4_000_000
 for ii in range(0,lines+1):
     tmp = interval_union(find_holes(ii, sensors))
-    if len(tmp) == 2 and (0 <= tmp[0][1] <= lines):
+    if len(tmp) == 2 and (-1 <= tmp[0][1] < lines):
         print((tmp[0][1]+1)*lines+ii)
         break
     
