@@ -45,5 +45,7 @@ def dec2snafu(number):
     return result
 
 
+# Part 1
 part1 = dec2snafu(sum([snafu2dec(entry) for entry in data]))
 print(part1)
+# Part 2: Finish the missing stars
