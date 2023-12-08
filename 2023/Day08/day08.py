@@ -21,31 +21,24 @@ for line in data[2:]:
     tree[tmp[0]] = tmp[1:]
 
 
-# Part 1
-steps = 0
-steppos = 0
-current = 'AAA'
-while current != 'ZZZ':
-    steps += 1
-    select = directions[steppos % (len(directions))]
-    steppos += 1
-    current = tree[current][select]
-print(f'Part 1: {steps}')
+def find_steps(startnode, endnodes, tree, directions):
+    steps = 0
+    steppos = 0
+    current = startnode
+    while current not in endnodes:
+        steps += 1
+        select = directions[steppos % (len(directions))]
+        steppos += 1
+        current = tree[current][select]
+    return steps
+
+# Part 1:
+print(f"Part 1: {find_steps('AAA',['ZZZ',],tree,directions)}")
 
 
 # Part 2
-currentnodes = [x for x in tree.keys() if x[-1] == 'A']
-# do for each starting node, then find least common multiple
-nodesteps = []
-for current in currentnodes:
-    steps = 0
-    steppos = 0
-    while current[-1] != 'Z':
-        steps += 1
-        select = directions[steppos % (len(directions))]
-        current = tree[current][select]
-        steppos += 1
-    nodesteps.append(steps)
-print(f'Part 2: {lcm(*nodesteps)}')
-
-
+startnodes = [x for x in tree.keys() if x[-1] == 'A']
+endnodes = [x for x in tree.keys() if x[-1] == 'Z']
+result = []
+for current in startnodes:
+    result.append(find_steps(current,endnodes,tree,directions))
